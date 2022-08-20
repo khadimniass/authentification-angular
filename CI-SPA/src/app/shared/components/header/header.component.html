@@ -1,0 +1,58 @@
+<ng-progress id="progressBar"
+             [color]="progressBar.currentColor"
+             [thick]="true"></ng-progress>
+<ngx-alerts></ngx-alerts>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand"
+       [routerLink]="['']"><i class="fas fa-user-clock"></i> CLOCK IT HUB</a>
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse"
+         id="navbarNav">
+        <ul class="navbar-nav ml-auto headerNav">
+            <li class="nav-item"
+                *ngIf="!authService.loggedIn();">
+                <a class="nav-link"
+                   [routerLink]="['register']"
+                   routerLinkActive="active">Register</a>
+            </li>
+            <li class="nav-item"
+                *ngIf="!authService.loggedIn();">
+                <a class="nav-link"
+                   [routerLink]="['login']"
+                   routerLinkActive="active">Login</a>
+            </li>
+            <li class="nav-item dropdown profile-dropdown-container"
+                *ngIf="authService.loggedIn();"
+                dropdown>
+                <span>
+                    <img src="{{authService.currentUser?.profileImageUrl}}"
+                         alt="Profile Image">
+                </span>
+                <a class="nav-link"
+                   dropdownToggle>
+                    Welcome {{authService.decodedToken?.unique_name}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right"
+                     *dropdownMenu>
+                    <a class="dropdown-item"
+                       [routerLink]="['reset-password']"
+                       routerLinkActive="active"><i class="fas fa-key"></i> Reset Password</a>
+                    <a class="dropdown-item"
+                       [routerLink]="['employer-edit']"
+                       routerLinkActive="active"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                    <a class="dropdown-item"
+                       (click)="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
